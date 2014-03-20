@@ -6,9 +6,9 @@ Patches to davej@redhat.com
 
 Done so far:
 - common/ dir for rdmsr/cpuid etc that all executables will need.
+- x86mtrr : MTRR register decoder.
 
 TODO:
-- x86mtrr : MTRR register decoder.
 - x86features : feature flag decoder
 - x86cacheinfo : decode the cache cpuid leaves
 - x86identify : (what's leftover in x86info after the above).

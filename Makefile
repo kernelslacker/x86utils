@@ -39,6 +39,8 @@ V	= @
 Q	= $(V:1=)
 QUIET_CC = $(Q:@=@echo    '  CC '$@;)
 
+all: x86mtrr
+
 X86UTILS_HEADERS = \
 	$(patsubst %.h,%.h,$(wildcard *.h)) \
 	$(patsubst %.h,%.h,$(wildcard include/*.h))
@@ -49,6 +51,9 @@ ALL_OBJS = $(sort $(patsubst %.c,%.o,$(wildcard *.c)))
 
 COMMON_OBJS = \
 	$(sort $(patsubst %.c,%.o,$(wildcard common/*.c)))
+
+x86mtrr: $(COMMON_OBJS) x86mtrr.o $(X86UTILS_HEADERS)
+	$(QUIET_CC)$(CC) $(CFLAGS) $(LDFLAGS) -o x86mtrr $(COMMON_OBJS) x86mtrr.o
 
 DEPDIR= .deps
 -include $(X86UTILS_SRC:%.c=$(DEPDIR)/%.d)
@@ -72,6 +77,7 @@ release:
 clean:
 	@find . -name "*.o" -exec rm {} \;
 	@find . -name "*~" -exec rm {} \;
+	@rm -f x86mtrr
 	@rm -f core.*
 	@rm -rf $(DEPDIR)/*
 	@rm -f x86utils-coverity.tgz
