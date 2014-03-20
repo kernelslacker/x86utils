@@ -1,0 +1,7 @@
+*.o
+.d
+.deps
+cov-int
+tags
+x86utils-*.tgz
+x86mtrr
