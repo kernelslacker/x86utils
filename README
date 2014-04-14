@@ -1,3 +1,7 @@
+{ the last month of work got lost in a hard disk corruption incident.
+  so while this is incomplete, it's the newest backup I have, and I'd rather
+  not risk losing it again, so 'push early and often' and all that.. }
+
 x86info grew into a tangled hairball that grew to be too painful to maintain.
 x86utils is a more fine-grained version of x86info, with many standalone tools
 instead of one single executable with a dozen features.
