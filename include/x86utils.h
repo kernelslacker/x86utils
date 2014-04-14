@@ -22,7 +22,9 @@ void cpuid4(unsigned int cpu, unsigned long long idx, unsigned int *eax, unsigne
 void cpuid_count(unsigned int cpu, unsigned int op, int count, unsigned int *eax, unsigned int *ebx, unsigned int *ecx, unsigned int *edx);
 unsigned int cpuid_ebx(unsigned int cpu, unsigned int op);
 int native_cpuid(unsigned int cpunr, unsigned long long idx, unsigned int *eax, unsigned int *ebx, unsigned int *ecx, unsigned int *edx);
-int HaveCPUID(void);
+int have_cpuid(void);
+const char *cpu_vendor_name(int vendor);
+int get_vendor(const char *vendorstr);
 
 #define family(c) (c->family + c->efamily)
 #define model(c) ((c->emodel << 4) + c->model)
