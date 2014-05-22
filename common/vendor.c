@@ -51,7 +51,7 @@ const char *cpu_vendor_name(int vendor)
 
 int get_vendor(const char *vendorstr)
 {
-	unsigned int i;
+	unsigned int i = 0;
 
 	while (i < ARRAY_SIZE(x86_vendors)) {
 		if (strcmp(vendorstr, x86_vendors[i].name)) {
