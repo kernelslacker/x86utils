@@ -146,11 +146,27 @@ static void decode_mtrr_physmask(unsigned int cpunum, int msr)
 	}
 }
 
+struct mtrrdesc {
+	const char *name;
+	unsigned int reg;
+};
 
 static void dump_mtrrs(unsigned int cpunum)
 {
 	unsigned long long val = 0;
 	unsigned int i;
+	struct mtrrdesc fixedmtrrs[] = {
+		{ "MTRRfix64K_00000", 0x250 },
+		{ "MTRRfix16K_80000", 0x258 },
+		{ "MTRRfix16K_A0000", 0x259 },
+		{ "MTRRfix4K_C8000", 0x269 },
+		{ "MTRRfix4K_D0000", 0x26a },
+		{ "MTRRfix4K_D8000", 0x26b },
+		{ "MTRRfix4K_E0000", 0x26c },
+		{ "MTRRfix4K_E8000", 0x26d },
+		{ "MTRRfix4K_F0000", 0x26e },
+		{ "MTRRfix4K_F8000", 0x26f },
+	};
 
 	/*
 	 * If MTRR registers are not accessible like in some
@@ -173,27 +189,12 @@ static void dump_mtrrs(unsigned int cpunum)
 		decode_mtrr_physmask(cpunum, 0x201 + i);
 	}
 
-	printf("MTRRfix64K_00000 (0x250): ");
-	dump_mtrr (cpunum, 0x250);
-	printf("MTRRfix16K_80000 (0x258): ");
-	dump_mtrr (cpunum, 0x258);
-	printf("MTRRfix16K_A0000 (0x259): ");
-	dump_mtrr (cpunum, 0x259);
+	for (i = 0; i < ARRAY_SIZE(fixedmtrrs); i++) {
+		unsigned int reg = fixedmtrrs[i].reg;
 
-	printf("MTRRfix4K_C8000 (0x269): ");
-	dump_mtrr (cpunum, 0x269);
-	printf("MTRRfix4K_D0000 0x26a: ");
-	dump_mtrr (cpunum, 0x26a);
-	printf("MTRRfix4K_D8000 0x26b: ");
-	dump_mtrr (cpunum, 0x26b);
-	printf("MTRRfix4K_E0000 0x26c: ");
-	dump_mtrr (cpunum, 0x26c);
-	printf("MTRRfix4K_E8000 0x26d: ");
-	dump_mtrr (cpunum, 0x26d);
-	printf("MTRRfix4K_F0000 0x26e: ");
-	dump_mtrr (cpunum, 0x26e);
-	printf("MTRRfix4K_F8000 0x26f: ");
-	dump_mtrr (cpunum, 0x26f);
+		printf("%s (0x%x): ", fixedmtrrs[i].name, reg);
+		dump_mtrr(cpunum, reg);
+	}
 
 	printf("MTRRdefType (0x2ff): ");
 	decode_mtrr_deftype(cpunum, 0x2ff);
